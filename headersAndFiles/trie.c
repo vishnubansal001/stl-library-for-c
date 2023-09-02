@@ -97,8 +97,11 @@ static bool _trie_remove_helper(TrieNode *node, const char *key, int level) {
 
     int index = key[level] - 'a';
     if (_trie_remove_helper(node->children[index], key, level + 1)) {
-        free(node->children[index]);
-        node->children[index] = NULL;
+        // Remove the child node if it's empty and not associated with a value
+        if (_trie_node_is_empty(node->children[index]) && !node->children[index]->value) {
+            free(node->children[index]);
+            node->children[index] = NULL;
+        }
         return !_trie_node_is_empty(node);
     }
     return false;

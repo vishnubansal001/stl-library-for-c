@@ -106,7 +106,7 @@ int main() {
     
     // // -------------------------------- PQueue ------------------------------
     
-    // PQueue *pq = pqueue_create(sizeof(int),cmp);
+    // PQueue *pq = pqueue_create(sizeof(int),compare_int);
     
     // if(!pq){
     // 	printf("Failed to create Priority Queue\n");
@@ -123,7 +123,7 @@ int main() {
     // 	}
     // }
     
-    // printf("Priority queue contains: ");
+    //printf("Priority queue contains: ");
     // while(!pqueue_is_empty(pq)){
     // 	int val;
     // 	if(pqueue_peek(pq,&val)){
@@ -248,6 +248,7 @@ int main() {
 
     int choice;
     do {
+    	printf("--------start--------\n");
         printf("\nSelect an option:\n");
         printf("1. Stack\n");
         printf("2. Queue\n");
@@ -256,6 +257,7 @@ int main() {
         printf("5. Search in Array\n");
         printf("6. Sorting\n");
         printf("7. Exit\n");
+        printf("---------------------\n");
         printf("Enter your choice: ");
         scanf("%d", &choice);
 
@@ -263,10 +265,12 @@ int main() {
             case 1:
                 int elementDataType;
                 size_t element_size;
+                printf("---------------------\n");
                 printf("Select element data type:\n");
                 printf("1. int\n");
                 printf("2. double\n");
                 printf("3. char\n");
+                printf("---------------------\n");
                 printf("Enter your choice: ");
                 scanf("%d", &elementDataType);
 
@@ -292,12 +296,14 @@ int main() {
                 }
                 int choice1;
                 do {
+                    printf("---------------------\n");
                     printf("\n1. Push an element\n");
                     printf("2. Pop an element\n");
                     printf("3. Peek at the top element\n");
                     printf("4. Check if stack is empty\n");
                     printf("5. Print all elements of stack\n");
                     printf("6. Exit\n");
+                    printf("---------------------\n");
                     printf("Enter your choice: ");
                     scanf("%d", &choice1);
 
@@ -393,33 +399,35 @@ int main() {
                             } else {
                                 printf("Elements in the stack:\n");
                                 while (!stack_is_empty(stack)) {
-                                    void *element = malloc(element_size);
-                                    if (!element) {
-                                        printf("Memory allocation failed.\n");
-                                        break;
-                                    }
+				    void *element = malloc(element_size);
+				    if (!element) {
+					printf("Memory allocation failed.\n");
+					break;
+				    }
+				    if (stack_peek(stack, element)) {
+					// Print the element based on its data type
+					if (element_size == sizeof(int)) {
+					    printf("%d ", *(int *)element);
+					} else if (element_size == sizeof(double)) {
+					    printf("%lf ", *(double *)element);
+					} else if (element_size == sizeof(char)) {
+					    printf("%c ", *(char *)element);
+					} else {
+					    printf("Unsupported element size.\n");
+					    free(element);
+					    break;
+					}
+				    }
 
-                                        if (stack_peek(stack, element)) {
-                                            if (element_size == sizeof(int)) {
-                                                printf("%d ", *(int *)element);
-                                            } else if (element_size == sizeof(double)) {
-                                                printf("%lf ", *(double *)element);
-                                            } else if (element_size == sizeof(char)) {
-                                                printf("%c ", *(char *)element);
-                                            } else {
-                                                printf("Unsupported element size.\n");
-                                                free(element);
-                                                break;
-                                            }
-                                        }
-                                    if (!stack_pop(stack)) {
-                                    	printf("Some Error Occured!!\n");
-                                    	break;
-                                    }
+			            // Pop from the original stack and push into the temporary stack
+				    if (!stack_pop(stack)) {
+					printf("Some Error Occurred!!\n");
+					break;
+				    }
 
-                                    free(element);
-                                }
-                                printf("\n");
+				    free(element);
+				}
+				printf("\n");
                             }
                             break;
                         }
@@ -437,10 +445,12 @@ int main() {
             case 2:
                 int elementDataType1;
                 size_t element_size1;
+                printf("---------------------\n");
                 printf("Select element data type:\n");
                 printf("1. int\n");
                 printf("2. double\n");
                 printf("3. char\n");
+                printf("---------------------\n");
                 printf("Enter your choice: ");
                 scanf("%d", &elementDataType1);
 
@@ -466,6 +476,7 @@ int main() {
                 }
                 int choice2;
                 do {
+                    printf("---------------------\n");
                     printf("\nQueue Menu:\n");
                     printf("1. Enqueue an element\n");
                     printf("2. Dequeue an element\n");
@@ -473,6 +484,7 @@ int main() {
                     printf("4. Check if queue is empty\n");
                     printf("5. Print all elements of queue\n");
                     printf("6. Exit\n");
+                    printf("---------------------\n");
                     printf("Enter your choice: ");
                     scanf("%d", &choice2);
 
@@ -572,32 +584,30 @@ int main() {
                             } else {
                                 printf("Elements in the queue:\n");
                                 while (!queue_is_empty(queue)) {
-                                    void *element = malloc(element_size1);
-                                    if (!element) {
-                                        printf("Memory allocation failed.\n");
-                                        break;
-                                    }
-
-                                    if (queue_dequeue(queue)) {
-                                        if (queue_peek(queue, element)) {
-                                            // Print the dequeued element based on its data type
-                                            if (element_size1 == sizeof(int)) {
-                                                printf("%d ", *(int *)element);
-                                            } else if (element_size1 == sizeof(double)) {
-                                                printf("%lf ", *(double *)element);
-                                            } else if (element_size1 == sizeof(char)) {
-                                                printf("%c ", *(char *)element);
-                                            } else {
-                                                printf("Unsupported element size.\n");
-                                                free(element);
-                                                break;
-                                            }
-                                        }
-                                    }
-
-                                    free(element);
-                                }
-                                printf("\n");
+				    void *element = malloc(element_size1);
+				    if (!element) {
+					printf("Memory allocation failed.\n");
+					break;
+				    }
+				    if (queue_peek(queue, element)) {
+					// Print the element based on its data type
+					if (element_size1 == sizeof(int)) {
+					    printf("%d ", *(int *)element);
+					} else if (element_size1 == sizeof(double)) {
+					    printf("%lf ", *(double *)element);
+					} else if (element_size1 == sizeof(char)) {
+					    printf("%c ", *(char *)element);
+					} else {
+					    printf("Unsupported element size.\n");
+					    free(element);
+					    break;
+					}
+				    }
+				    // Dequeue from the original queue and enqueue into the temporary queue
+				    queue_dequeue(queue);
+				    free(element);
+				}
+				printf("\n");
                             }
                             break;
                         }
@@ -615,10 +625,12 @@ int main() {
             case 3:
             	int elementDataType2;
                 size_t element_size2;
+                printf("---------------------\n");
                 printf("Select element data type:\n");
                 printf("1. int\n");
                 printf("2. double\n");
                 printf("3. char\n");
+                printf("---------------------\n");
                 printf("Enter your choice: ");
                 scanf("%d", &elementDataType2);
 
@@ -640,52 +652,64 @@ int main() {
                         return 1;
                 }
                 PQueue *pq = pqueue_create(element_size, compare_int);
-                if (!queue) {
+                if (!pq) {
                     printf("Failed to create priority queue.\n");
                     return 1;
                 }
 
                 int choice3;
                 do {
+                    printf("---------------------\n");
                     printf("\n1. Enqueue an element\n");
                     printf("2. Dequeue an element\n");
                     printf("3. Peek at the front element\n");
                     printf("4. Check if priority queue is empty\n");
                     printf("5. Exit\n");
+                    printf("---------------------\n");
                     printf("Enter your choice: ");
                     scanf("%d", &choice3);
                     switch (choice3) {
                         case 1: {
                             // Enqueue an element into the priority queue
-                            void *newElement = malloc(element_size2);
-                            if(!newElement){
-                                printf("Memory allocation failed.\n");
-                                break;
-                            }
-                            printf("Enter an element: ");
-                            if (element_size2 == sizeof(int)) {
-                                int intValue;
-                                scanf("%d", &intValue);
-                                memcpy(newElement, &intValue, sizeof(int));
-                            } else if (element_size2 == sizeof(double)) {
-                                double doubleValue;
-                                scanf("%lf", &doubleValue);
-                                memcpy(newElement, &doubleValue, sizeof(double));
-                            } else if (element_size2 == sizeof(char)) {
-                                char charValue;
-                                scanf(" %c", &charValue);
-                                memcpy(newElement, &charValue, sizeof(char));
-                            } else {
-                                printf("Unsupported element size.\n");
-                                free(newElement);
-                                break;
-                            }
-                            if (pqueue_enqueue(pq, &newElement)) {
-                                printf("Element enqueued.\n");
-                            } else {
-                                printf("Failed to enqueue element.\n");
-                            }
-                            break;
+                            void *newElement; // Declare a pointer without allocating memory
+                            printf("please enter the element: ");
+			if (element_size2 == sizeof(int)) {
+			    int intValue;
+			    scanf("%d", &intValue);
+			    newElement = malloc(sizeof(int)); // Allocate memory for the data
+			    if (newElement) {
+				memcpy(newElement, &intValue, sizeof(int));
+			    }
+			} else if (element_size2 == sizeof(double)) {
+			    double doubleValue;
+			    scanf("%lf", &doubleValue);
+			    newElement = malloc(sizeof(double)); // Allocate memory for the data
+			    if (newElement) {
+				memcpy(newElement, &doubleValue, sizeof(double));
+			    }
+			} else if (element_size2 == sizeof(char)) {
+			    char charValue;
+			    scanf(" %c", &charValue);
+			    newElement = malloc(sizeof(char)); // Allocate memory for the data
+			    if (newElement) {
+				memcpy(newElement, &charValue, sizeof(char));
+			    }
+			} else {
+			    printf("Unsupported element size.\n");
+			    break;
+			}
+
+			if (newElement) {
+			    if (pqueue_enqueue(pq, newElement)) {
+				printf("Element enqueued.\n");
+			    } else {
+				printf("Failed to enqueue element.\n");
+				free(newElement); // Free memory in case of failure
+			    }
+			} else {
+			    printf("Memory allocation failed.\n");
+			}
+			break;
                         }
                         case 2: {
                             // Dequeue an element from the priority queue
@@ -700,28 +724,48 @@ int main() {
                             // Peek at the front element
                             if (!pqueue_is_empty(pq)) {
                                 // Allocate memory for the element to be peeked
-                                void *peekedElement = malloc(element_size2);
-                                if (!peekedElement) {
-                                    printf("Memory allocation failed.\n");
-                                    break;
-                                }
+                                // void *peekedElement = malloc(element_size2);
+                               // if (!peekedElement) {
+                                  //  printf("Memory allocation failed.\n");
+                                 //   break;
+                               // }
 
-                                if (pqueue_peek(pq, peekedElement)) {
-                                    printf("Peeked element: ");
-                                    // Print the peeked element based on its data type
-                                    if (element_size2 == sizeof(int)) {
-                                        printf("%d\n", *(int *)peekedElement);
-                                    } else if (element_size2 == sizeof(double)) {
-                                        printf("%lf\n", *(double *)peekedElement);
-                                    } else if (element_size2 == sizeof(char)) {
-                                        printf("%c\n", *(char *)peekedElement);
-                                    } else {
-                                        printf("Unsupported element size.\n");
-                                    }
-                                } else {
-                                    printf("Failed to peek at element.\n");
+                              //  if (pqueue_peek(pq, peekedElement)) {
+                                   // printf("Peeked element: ");
+                                   // // Print the peeked element based on its data type
+                                   // if (element_size2 == sizeof(int)) {
+                                    //    printf("%d\n", *(int *)peekedElement);
+                                   // } else if (element_size2 == sizeof(double)) {
+                                    //    printf("%lf\n", *(double *)peekedElement);
+                                   // } else if (element_size2 == sizeof(char)) {
+                                   //     printf("%c\n", *(char *)peekedElement);
+                                  //  } else {
+                                 //       printf("Unsupported element size.\n");
+                                //    }
+                                //} else {
+                                //    printf("Failed to peek at element.\n");
+                                //}
+                                
+                                printf("Peeked Element: ");
+                                if(elementDataType2 == 1){
+                                    int intValue;
+                                    if(pqueue_peek(pq,&intValue)){
+				        printf("%d\n",intValue);
+				    }
                                 }
-                                free(peekedElement);
+                                else if(elementDataType2 == 2){
+                                     double doubleValue;
+                                     if(pqueue_peek(pq,&doubleValue)){
+				        printf("%lf\n",doubleValue);
+				     }
+                                }
+                                else if(elementDataType2 == 3){
+                                     char charValue;
+                                     if(pqueue_peek(pq,&charValue)){
+				        printf("%c\n",charValue);
+				     }
+                                }
+                                //free(peekedElement);
                             } else {
                                 printf("Priority queue is empty.\n");
                             }
@@ -756,10 +800,11 @@ int main() {
 
                 int choice;
                 do {
+                    printf("---------------------\n");
                     printf("\n1. Insert a key-value pair\n");
                     printf("2. Search for a key\n");
-                    printf("3. Remove a key\n");
-                    printf("4. Exit\n");
+                    printf("3. Exit\n");
+                    printf("---------------------\n");
                     printf("Enter your choice: ");
                     scanf("%d", &choice);
 
@@ -794,19 +839,6 @@ int main() {
                             break;
                         }
                         case 3: {
-                            // Remove a key from the Trie
-                            char key[100];
-                            printf("Enter a key to remove (string): ");
-                            scanf("%s", key);
-
-                            if (trie_remove(trie, key)) {
-                                printf("Key removed.\n");
-                            } else {
-                                printf("Key not found or Trie is empty.\n");
-                            }
-                            break;
-                        }
-                        case 4: {
                             // Exit the program
                             trie_destroy(trie);
                             printf("Exiting...\n");
@@ -815,7 +847,7 @@ int main() {
                         default:
                             printf("Invalid choice.\n");
                     }
-                } while (choice != 4);
+                } while (choice != 3);
                 break;
             case 5:
                 int choice4;
@@ -823,11 +855,12 @@ int main() {
                 size_t elementSize;
                 printf("Enter the size of the array: ");
                 scanf("%d", &size);
-                
+                printf("---------------------\n");
                 printf("Choose a data type:\n");
                 printf("1. Integer\n");
                 printf("2. Double\n");
                 printf("3. Character\n");
+                printf("---------------------\n");
                 printf("Enter your choice: ");
                 scanf("%d", &choice4);
 
@@ -909,11 +942,12 @@ int main() {
                 size_t elemSize1;
                 printf("Enter the size of the array: ");
                 scanf("%d", &size1);
-
+                printf("---------------------\n");
                 printf("Choose a data type:\n");
                 printf("1. Integer\n");
                 printf("2. Double\n");
                 printf("3. Character\n");
+                printf("---------------------\n");
                 printf("Enter your choice: ");
                 scanf("%d", &choice5);
 
@@ -953,12 +987,14 @@ int main() {
                 }
 
                 // Choose a sorting algorithm
+                printf("---------------------\n");
                 printf("Choose a sorting algorithm:\n");
                 printf("1. Bubble Sort\n");
                 printf("2. Insertion Sort\n");
                 printf("3. Merge Sort\n");
                 printf("4. Quick Sort\n");
                 printf("5. sort\n");
+                printf("---------------------\n");
                 printf("Enter your choice: ");
                 int sortingChoice;
                 scanf("%d", &sortingChoice);
