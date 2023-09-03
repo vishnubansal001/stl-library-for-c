@@ -23,7 +23,6 @@ This C library provides generic implementations of common data structures and al
 - [Contributing](#contributing)
 - [License](#license)
 <br/>
-<br/>
 
 ## Introduction
 
@@ -38,7 +37,6 @@ This library provides a collection of common data structures and algorithms impl
 - ***Search Algorithms:*** Includes linear search and binary search.
 - ***Modular Design:*** Well-organized directory structure and modular code make it easy to understand and maintain.
 - ***Detailed Documentation:*** Each data structure and algorithm is thoroughly documented for easy reference.
-<br/>
 <br/>
 
 ## Getting Started
@@ -59,14 +57,12 @@ This library provides a collection of common data structures and algorithms impl
      
      Link the library to your project by including the header files and linking to the static        library file. Make sure to include the relevant headers for the data structures and             algorithms you want to use.
 <br/>
-<br/>
 
 ## Usage
 
 - Include the necessary header files in your C code.
 - Initialize and use the data structures and algorithms as needed.
 - Refer to the documentation in the code comments for detailed usage instructions.
-<br/>
 <br/>
 
 ## Data Structures
@@ -84,6 +80,7 @@ This library provides a collection of common data structures and algorithms impl
   A generic trie (prefix tree) implementation for efficient string-based data storage and retrieval.
 <br/>
 <br/>
+<br/>
 
 ## Algorithms
 
@@ -97,7 +94,6 @@ This library provides a collection of common data structures and algorithms impl
   - ***Quick Sort:*** Sort an array using the quick sort algorithm.
   - ***Merge Sort:*** Sort an array using the merge sort algorithm.
 <br/>
-<br/>
 
 ## Contibuting
 
@@ -108,7 +104,6 @@ This library provides a collection of common data structures and algorithms impl
   3. Make your changes and commit them: ```git commit -m 'New:Add some feature'```.
   4. Push to the branch: ```git push origin feature/your-feature-name```.
   5. Open a pull request to the `main` branch of this repository.
-<br/>
 <br/>
 
 ## License
