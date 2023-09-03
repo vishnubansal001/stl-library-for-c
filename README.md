@@ -73,7 +73,7 @@ This library provides a collection of common data structures and algorithms impl
   ### Queue
   A generic queue implementation with enqueue, dequeue, and peek operations.
 
-  ### Priorirty Queue 
+  ### Priority Queue 
   A generic priority queue implementation using a heap data structure
 
   ### Trie
@@ -95,7 +95,7 @@ This library provides a collection of common data structures and algorithms impl
   - ***Merge Sort:*** Sort an array using the merge sort algorithm.
 <br/>
 
-## Contibuting
+## Contributing
 
   Contributions are welcome! If you'd like to contribute to this project, please follow these     guidelines:
 
