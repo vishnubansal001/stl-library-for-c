@@ -3,13 +3,14 @@
 
 #include <stdbool.h>
 
-typedef struct TrieNode TrieNode;
-typedef struct Trie Trie;
+struct TrieNode;
 
-Trie *trie_create();
-void trie_insert(Trie *trie, const char *key, void *value);
-bool trie_search(Trie *trie, const char *key, void **value);
-bool trie_remove(Trie *trie, const char *key);
-void trie_destroy(Trie *trie);
+struct TrieNode* createNode();
+void insert(struct TrieNode* root, const char* word);
+bool search(struct TrieNode* root, const char* word);
+char** autocomplete(struct TrieNode* root, const char* prefix);
+void freeAutocompleteResults(char** results);
+void destroy(struct TrieNode* root);
 
-#endif // TRIE_H
+#endif
+

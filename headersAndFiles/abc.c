@@ -2,7 +2,6 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <string.h>
-#include "trie.h"
 
 #define ALPHABET_SIZE 26
 #define MAX_WORD_LENGTH 100
@@ -121,5 +120,40 @@ void destroyTrie(struct TrieNode* node) {
 // Function to destroy the entire Trie
 void destroy(struct TrieNode* root) {
     destroyTrie(root);
+}
+
+int main() {
+    struct TrieNode* root = createNode();
+
+    insert(root, "apple");
+    insert(root, "app");
+    insert(root, "banana");
+    insert(root, "bat");
+    insert(root, "cat");
+
+    const char* searchWord = "app";
+    if (search(root, searchWord)) {
+        printf("%s found in the Trie.\n", searchWord);
+    } else {
+        printf("%s not found in the Trie.\n", searchWord);
+    }
+
+    char prefix[] = "ba";
+    char** autocompleteResults = autocomplete(root, prefix);
+
+    if (autocompleteResults) {
+        printf("Words starting with '%s':\n", prefix);
+        for (int i = 0; autocompleteResults[i] != NULL; i++) {
+            printf("%s\n", autocompleteResults[i]);
+        }
+        freeAutocompleteResults(autocompleteResults);
+    } else {
+        printf("No words found with prefix '%s'.\n", prefix);
+    }
+
+    // Destroy the Trie when done
+    destroy(root);
+
+    return 0;
 }
 

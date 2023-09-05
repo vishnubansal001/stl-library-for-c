@@ -8,6 +8,8 @@
 #include "headersAndFiles/searching.h"
 #include "headersAndFiles/sorting.h"
 
+#define MAX_WORD_LENGTH 100
+
 int (*CompareFn)(const void *, const void *);
 
 int compare_int(const void *a, const void *b) {
@@ -792,63 +794,78 @@ int main() {
                 } while (choice3 != 5);
                 break;
             case 4:
-                Trie *trie = trie_create();
-                if (!trie) {
-                    printf("Failed to create Trie.\n");
-                    return 1;
-                }
+                struct TrieNode* root = createNode();
+	        if (!root) {
+		    printf("Failed to create Trie.\n");
+		    return 1;
+	    	}
 
-                int choice;
-                do {
-                    printf("---------------------\n");
-                    printf("\n1. Insert a key-value pair\n");
-                    printf("2. Search for a key\n");
-                    printf("3. Exit\n");
-                    printf("---------------------\n");
-                    printf("Enter your choice: ");
-                    scanf("%d", &choice);
+	        int choice;
+	        do {
+		    printf("---------------------\n");
+		    printf("\n1. Insert a word into the Trie\n");
+		    printf("2. Search for a word\n");
+		    printf("3. Autocomplete words with a prefix\n");
+		    printf("4. Destroy the Trie and Exit\n");
+		    printf("---------------------\n");
+		    printf("Enter your choice: ");
+		    scanf("%d", &choice);
+		    
+		    switch (choice) {
+		        case 1: {
+		            // Insert a word into the Trie
+		            char word[MAX_WORD_LENGTH];
+		            printf("Enter a word (string): ");
+		            scanf("%s", word);
+		            
+		            insert(root, word);
+		            printf("Word inserted.\n");
+		            break;
+		        }
+		        case 2: {
+		            // Search for a word in the Trie
+		            char word[MAX_WORD_LENGTH];
+		            printf("Enter a word to search (string): ");
+		            scanf("%s", word);
+		            
+		            if (search(root, word)) {
+		                printf("%s found in the Trie.\n", word);
+		            } else {
+		                printf("%s not found in the Trie.\n", word);
+		            }
+		            break;
+		        }
+		        case 3: {
+		            // Autocomplete words with a prefix
+		            char prefix[MAX_WORD_LENGTH];
+		            printf("Enter a prefix (string): ");
+		            scanf("%s", prefix);
 
-                    switch (choice) {
-                        case 1: {
-                            // Insert a key-value pair into the Trie
-                            char key[100];
-                            printf("Enter a key (string): ");
-                            scanf("%s", key);
+		            char** autocompleteResults = autocomplete(root, prefix);
 
-                            char value[100];
-                            printf("Enter a value (string): ");
-                            scanf("%s", value);
-
-                            // Since both key and value are strings, you can directly pass them
-                            trie_insert(trie, key, value);
-                            printf("Key-value pair inserted.\n");
-                            break;
-                        }
-                        case 2: {
-                            // Search for a key in the Trie
-                            char key[100];
-                            printf("Enter a key (string): ");
-                            scanf("%s", key);
-
-                            char *value;
-                            if (trie_search(trie, key, (void **)&value)) {
-                                printf("Value: %s\n", value);
-                            } else {
-                                printf("Key not found.\n");
-                            }
-                            break;
-                        }
-                        case 3: {
-                            // Exit the program
-                            trie_destroy(trie);
-                            printf("Exiting...\n");
-                            break;
-                        }
-                        default:
-                            printf("Invalid choice.\n");
-                    }
-                } while (choice != 3);
-                break;
+		            if (autocompleteResults) {
+		                printf("Words starting with '%s':\n", prefix);
+		                for (int i = 0; autocompleteResults[i] != NULL; i++) {
+		                    printf("%s\n", autocompleteResults[i]);
+		                }
+		                freeAutocompleteResults(autocompleteResults);
+		            } else {
+		                printf("No words found with prefix '%s'.\n", prefix);
+		            }
+		            break;
+		        }
+		        case 4: {
+		            // Destroy the Trie and exit
+		            destroy(root);
+		            printf("Trie destroyed. Exiting...\n");
+		            break;
+		        }
+		        default:
+		            printf("Invalid choice.\n");
+		    }
+	        } while (choice != 4);
+	        
+	        break;
             case 5:
                 int choice4;
                 int size;
